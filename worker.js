@@ -50,6 +50,8 @@ export class Queue {
       hash,
       id,
       ts,
+      instance,
+      operation,
       data,
     }
     
