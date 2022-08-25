@@ -38,7 +38,9 @@ export class Queue {
     }
             
     // get next item in queue
-    const data = await this.state.storage.list({ startAfter: this.cursor, reverse: true, limit: searchParams.get('limit') ?? 1 }).then(data => Object.fromEntries(data))
+    const data = await this.state.storage.list({ startAfter: this.cursor, 
+                                                //reverse: true, 
+                                                limit: searchParams.get('limit') ?? 1 }).then(data => Object.fromEntries(data))
     
     if (operation == 'dequeue') {
       // update the cursor position
