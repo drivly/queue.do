@@ -25,8 +25,8 @@ export class Queue {
     
     if (operation == 'enqueue') {
       // Add new item to queue
-      await this.state.storage.put(id, { id, ts, search, searchParams })
-      console.log({ id, ts, search, searchParams })
+      console.log({ id, ts, search, data: Object.fromEntries(searchParams) })
+      await this.state.storage.put(id, { id, ts, search, data: Object.fromEntries(searchParams) })
     }
             
     // get next item in queue
