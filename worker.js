@@ -41,6 +41,8 @@ export class Queue {
       this.state.storage.put('cursor', keys[keys.size - 1])
     }
     
+    const all = await this.state.storage.list()
+    
     const retval = {
       origin,
       method,
@@ -55,6 +57,7 @@ export class Queue {
       operation,
       cursor: this.cursor,
       data,
+      all,
     }
     
     return new Response(JSON.stringify(retval, null, 2), { headers: { 'content-type': 'application/json' } })
