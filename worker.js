@@ -52,6 +52,7 @@ export class Queue {
       ts,
       instance,
       operation,
+      cursor: this.cursor,
       data,
     }
     
