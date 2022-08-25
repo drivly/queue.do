@@ -51,7 +51,7 @@ export class Queue {
       id,
       ts,
       instance,
-      doId: this.state.id,
+      doId: this.state.id.toString(),
       operation,
       cursor: this.cursor,
       data,
