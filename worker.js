@@ -42,7 +42,7 @@ export class Queue {
     
     if (operation == 'dequeue') {
       // update the cursor position
-      const keys = Array.from(data.keys())
+      const keys = Object.keys(data)
       console.log({keys})
       this.state.storage.put('cursor', keys[keys.size - 1])
     }
