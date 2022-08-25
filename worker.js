@@ -23,6 +23,8 @@ export class Queue {
     const id = req.headers.get('cf-ray') + '-' + req.cf.colo
     const ts = Date.now()
     
+    console.log({ id, ts, search, })
+    
     if (operation == 'enqueue') {
       // Add new item to queue
       console.log({ id, ts, search, 
