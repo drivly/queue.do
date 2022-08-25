@@ -25,6 +25,8 @@ export class Queue {
     
     console.log({ id, ts, search, })
     
+    console.log('hello world')
+    
     if (operation == 'enqueue') {
       // Add new item to queue
       console.log({ id, ts, search, 
@@ -47,11 +49,14 @@ export class Queue {
     
     const all = await this.state.storage.list()
     
+    console.log({all})
+    
     const retval = {
       origin,
       method,
       hostname,
       pathname,
+      search,
       searchParams,
       hash,
       id,
