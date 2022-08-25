@@ -47,7 +47,7 @@ export class Queue {
       const keys = Object.keys(data)
       console.log({keys})
       this.cursor = keys[0]
-      this.state.storage.put('cursor', this.cursor)
+      this.cursor ? this.state.storage.put('cursor', this.cursor) : this.state.storage.delete('cursor')
     }
     
     const all = await this.state.storage.list().then(data => Object.fromEntries(data))
