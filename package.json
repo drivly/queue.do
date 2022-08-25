@@ -7,6 +7,12 @@
   "author": "Samuel Lippert <samuel@driv.ly>",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "dev": "wrangler dev worker.js",
+    "deploy": "wrangler publish worker.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write '**/*.{js,css,json,md}'"
+  },
   "devDependencies": {
     "jest": "^28.1.3",
     "prettier": "^2.7.1",
