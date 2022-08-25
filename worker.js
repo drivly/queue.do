@@ -68,7 +68,6 @@ export class Queue {
       doId: this.state.id.toString(),
       operation,
       cursor: this.cursor,
-      keys,
       data,
       all,
     }
