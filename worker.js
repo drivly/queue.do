@@ -46,7 +46,8 @@ export class Queue {
       // update the cursor position
       const keys = Object.keys(data)
       console.log({keys})
-      this.state.storage.put('cursor', keys[0])
+      this.cursor = keys[0]
+      this.state.storage.put('cursor', this.cursor)
     }
     
     const all = await this.state.storage.list().then(data => Object.fromEntries(data))
@@ -67,6 +68,7 @@ export class Queue {
       doId: this.state.id.toString(),
       operation,
       cursor: this.cursor,
+      keys,
       data,
       all,
     }
