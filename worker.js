@@ -18,7 +18,7 @@ export class Queue {
 
   async fetch(req) {
     const { url, method } = req
-    const { origin, hostname, pathname, searchParams, hash } = new URL(url)
+    const { origin, hostname, pathname, search, searchParams, hash } = new URL(url)
     const [ _, instance, operation ] = pathname.split('/')
     const id = req.headers.get('cf-ray') + '-' + req.cf.colo
     const ts = Date.now()
@@ -38,7 +38,8 @@ export class Queue {
     if (operation == 'dequeue') {
       // update the cursor position
       const keys = Array.from(data.keys())
-      this.state.storage.put('cursor', keys[keys.size - 1])
+      console.log({keys})
+      this.state.storage.put('cursor', { data: keys[keys.size - 1], id, ts, search, searchParams })
     }
     
     const all = await this.state.storage.list()
