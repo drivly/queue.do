@@ -1,6 +1,6 @@
 name = "queue-do"
 account_id = "b6641681fe423910342b9ffa1364c76d"
-route = { pattern = "queue.do/*", zone_id = "898c1d772c5dee216e8f48a8756af0c1" }
+route = { pattern = "*queue.do/*", zone_id = "898c1d772c5dee216e8f48a8756af0c1" }
 main = "worker.js"
 compatibility_date = "2022-08-24"
 
