@@ -25,11 +25,8 @@ export class Queue {
     
     if (operation == 'enqueue') {
       // Add new item to queue
-      await this.state.storage.put(id, Object.fromEntries(searchParams))
-      if (!this.cursor) {
-        this.cursor = id
-        this.state.storage.put('cursor', this.cursor)
-      }
+      await this.state.storage.put(id, { id, ts, search, searchParams })
+      console.log({ id, ts, search, searchParams })
     }
             
     // get next item in queue
@@ -39,7 +36,7 @@ export class Queue {
       // update the cursor position
       const keys = Array.from(data.keys())
       console.log({keys})
-      this.state.storage.put('cursor', { data: keys[keys.size - 1], id, ts, search, searchParams })
+      this.state.storage.put('cursor', keys[keys.size - 1])
     }
     
     const all = await this.state.storage.list()
