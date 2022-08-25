@@ -51,6 +51,7 @@ export class Queue {
       id,
       ts,
       instance,
+      doId: this.state.id,
       operation,
       cursor: this.cursor,
       data,
