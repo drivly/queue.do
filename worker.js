@@ -17,8 +17,8 @@ export class Queue {
   }
 
   async fetch(req) {
-    const { url, method } = req
-    const { origin, hostname, pathname, search, searchParams, hash } = new URL(url)
+    const { url } = req
+    const { pathname, search, searchParams } = new URL(url)
     const [_, instance, operation] = pathname.split('/')
     const id = req.headers.get('cf-ray') + '-' + req.cf.colo
     const ts = Date.now()
@@ -26,44 +26,36 @@ export class Queue {
     const item = { id, ts, search }
     console.log(item)
 
-    if (operation === 'enqueue') {
-      // Add new item to queue
-      await this.state.storage.put(id, item)
-    }
+    // Add new item to queue
+    if (operation === 'enqueue') await this.state.storage.put(id, item)
 
     // get next item in queue
-    const data = await this.state.storage
-      .list({
+    const data = Object.fromEntries(
+      await this.state.storage.list({
         startAfter: this.cursor,
-        limit: searchParams.get('limit') ?? 1,
+        limit: Math.max(searchParams.get('limit'), 1),
       })
-      .then((data) => Object.fromEntries(data))
+    )
+    if (data.cursor) delete data.cursor
 
     if (operation === 'dequeue') {
       // update the cursor position
       const keys = Object.keys(data)
-      console.log({ keys })
-      this.cursor = keys[0]
-      this.cursor ?? this.state.storage.put('cursor', this.cursor)
+      const key = keys?.[keys.length - 1]
+      if (key) this.state.storage.put('cursor', (this.cursor = key))
     }
 
-    const all = await this.state.storage.list().then((data) => Object.fromEntries(data))
+    const all = Object.fromEntries(await this.state.storage.list())
 
-    console.log({ all })
+    console.log(all)
 
     const retval = {
-      origin,
-      method,
-      hostname,
-      pathname,
-      search,
-      searchParams,
-      hash,
       id,
+      doId: this.state.id.toString(),
       ts,
       instance,
-      doId: this.state.id.toString(),
       operation,
+      search,
       cursor: this.cursor,
       data,
       all,
