@@ -17,8 +17,7 @@ export class Queue {
   }
 
   async fetch(req) {
-    const { url } = req
-    const { pathname, search, searchParams } = new URL(url)
+    const { pathname, search, searchParams } = new URL(req.url)
     const [_, instance, operation] = pathname.split('/')
     const id = req.headers.get('cf-ray') + '-' + req.cf.colo
     const ts = Date.now()
@@ -33,7 +32,7 @@ export class Queue {
     const data = Object.fromEntries(
       await this.state.storage.list({
         startAfter: this.cursor,
-        limit: Math.max(searchParams.get('limit'), 1),
+        limit: Math.max(searchParams.get('limit'), 1) || 1,
       })
     )
     if (data.cursor) delete data.cursor
