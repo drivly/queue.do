@@ -20,7 +20,7 @@ export class Queue {
     const { pathname, search, searchParams } = new URL(req.url)
     const [_, instance, operation] = pathname.split('/')
     const id = req.headers.get('cf-ray') + '-' + req.cf.colo
-    const ts = Date.now()
+    const ts = Date.UTC()
 
     const item = { id, ts, search }
     console.log(item)
