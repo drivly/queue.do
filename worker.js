@@ -1,7 +1,7 @@
 export default {
   fetch: (req, env) => {
     const { hostname, pathname } = new URL(req.url)
-    const [_, instance] = pathname.split('/')
+    const instance = pathname.split('/')[1]
     const id = env.QUEUE.idFromName(hostname + instance)
     const stub = env.QUEUE.get(id)
     return stub.fetch(req)
@@ -20,7 +20,7 @@ export class Queue {
     const { pathname, search, searchParams } = new URL(req.url)
     const [_, instance, operation] = pathname.split('/')
     const id = req.headers.get('cf-ray') + '-' + req.cf.colo
-    const ts = Date.UTC()
+    const ts = Date.now()
 
     const item = { id, ts, search }
     console.log(item)
