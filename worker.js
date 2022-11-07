@@ -45,7 +45,7 @@ export class Queue {
     }
     
     let all
-    if (!searchParams.get('excludes').includes('all')) {
+    if (!(searchParams.get('excludes') || '').includes('all')) {
       all = Object.fromEntries(await this.state.storage.list())
     }
 
