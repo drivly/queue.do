@@ -43,8 +43,11 @@ export class Queue {
       const key = keys?.[keys.length - 1]
       if (key) this.state.storage.put('cursor', (this.cursor = key))
     }
-
-    const all = Object.fromEntries(await this.state.storage.list())
+    
+    let all
+    if (!searchParams.get('excludes').includes('all')) {
+      all = Object.fromEntries(await this.state.storage.list())
+    }
 
     console.log(all)
 
